@@ -1,1 +1,140 @@
-# patoypata
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para vos 💛</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: #FFD54F;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    h1 {
+        margin-top: 35vh;
+        color: #333;
+        font-size: 26px;
+        animation: aparecer 2s ease;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 15px 25px;
+        font-size: 18px;
+        border: none;
+        border-radius: 12px;
+        background: #FF8C00;
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        animation: aparecer 2s ease;
+    }
+
+    button:active {
+        transform: scale(0.95);
+    }
+
+    @keyframes aparecer {
+        from {opacity: 0; transform: translateY(30px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    .foto {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 20px;
+        display: none;
+        animation: rebotar 5s infinite ease-in-out;
+    }
+
+    @keyframes rebotar {
+        0%   { transform: translate(0,0); }
+        25%  { transform: translate(80px,-120px); }
+        50%  { transform: translate(-60px,80px); }
+        75%  { transform: translate(100px,-50px); }
+        100% { transform: translate(0,0); }
+    }
+
+    .corazon {
+        position: absolute;
+        font-size: 24px;
+        animation: subir 5s linear infinite;
+    }
+
+    @keyframes subir {
+        from {
+            transform: translateY(100vh);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(-10vh);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<h1 id="texto">✨ Tocá para escuchar la canción 🎶</h1>
+<button onclick="iniciar()">🧡 Reproducir</button>
+
+<audio id="audio" src="patoypata.mp3"></audio>
+
+<!-- Fotos -->
+<img src="foto1.jpg" class="foto" style="top:10%; left:10%;">
+<img src="foto2.jpg" class="foto" style="top:20%; left:60%;">
+<img src="foto3.jpg" class="foto" style="top:60%; left:30%;">
+<img src="foto4.jpg" class="foto" style="top:70%; left:70%;">
+
+<script>
+function iniciar() {
+    let audio = document.getElementById("audio");
+    audio.volume = 0;
+    audio.play();
+
+    // efecto fade in del audio
+    let subirVolumen = setInterval(() => {
+        if (audio.volume < 1) {
+            audio.volume += 0.05;
+        } else {
+            clearInterval(subirVolumen);
+        }
+    }, 200);
+
+    document.getElementById("texto").innerHTML = "💖 Disfrutá la canción 💖";
+
+    let fotos = document.querySelectorAll(".foto");
+    fotos.forEach(f => {
+        f.style.display = "block";
+    });
+
+    // crear corazones
+    setInterval(crearCorazon, 500);
+}
+
+function crearCorazon() {
+    let corazon = document.createElement("div");
+    corazon.classList.add("corazon");
+    corazon.innerHTML = "💛";
+
+    corazon.style.left = Math.random() * 100 + "vw";
+    corazon.style.fontSize = (20 + Math.random() * 20) + "px";
+
+    document.body.appendChild(corazon);
+
+    setTimeout(() => {
+        corazon.remove();
+    }, 5000);
+}
+</script>
+
+</body>
+</html>
